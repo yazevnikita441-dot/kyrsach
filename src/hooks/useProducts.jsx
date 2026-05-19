@@ -1,9 +1,10 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import { demoProductImages, demoProducts } from '../data/demoProducts.js';
+import { demoProducts } from '../data/demoProducts.js';
 import { useAuth } from './useAuth.jsx';
 import { createId, readStorage, STORAGE_KEYS, writeStorage } from '../utils/storage.js';
 
 const ProductContext = createContext(null);
+const headphonesReplacement = demoProducts.find((product) => product.name === 'Orion S9');
 
 function attachUser(product, userId) {
   return {
@@ -39,15 +40,28 @@ export function ProductProvider({ children }) {
       return;
     }
 
-    const nextProducts = allProducts.map((product) => {
-      const demoImage = demoProductImages[product.name];
-      if (product.userId === currentUser.id && !product.image && demoImage) {
-        return { ...product, image: demoImage };
-      }
-      return product;
+    const fixedUserProducts = demoProducts.map((demoProduct) => {
+      const existingProduct = allProducts.find((product) => (
+        product.userId === currentUser.id
+        && (
+          product.name === demoProduct.name
+          || (product.name === 'SoundPro ANC' && demoProduct.name === headphonesReplacement?.name)
+        )
+      ));
+
+      return {
+        ...demoProduct,
+        id: existingProduct?.id || createId('product'),
+        userId: currentUser.id,
+      };
     });
 
-    if (nextProducts.some((product, index) => product !== allProducts[index])) {
+    const nextProducts = [
+      ...allProducts.filter((product) => product.userId !== currentUser.id),
+      ...fixedUserProducts,
+    ];
+
+    if (JSON.stringify(nextProducts) !== JSON.stringify(allProducts)) {
       persist(nextProducts);
     }
   }, [currentUser, seededUsers, allProducts]);
@@ -60,34 +74,10 @@ export function ProductProvider({ children }) {
     return allProducts.filter((product) => product.userId === currentUser.id);
   }, [allProducts, currentUser]);
 
-  function addProduct(product) {
-    const newProduct = {
-      ...product,
-      id: createId('product'),
-      userId: currentUser.id,
-      price: Number(product.price),
-    };
-    persist([...allProducts, newProduct]);
-    return newProduct;
-  }
-
-  function updateProduct(id, product) {
-    const next = allProducts.map((item) => (
-      item.id === id && item.userId === currentUser.id
-        ? { ...item, ...product, price: Number(product.price) }
-        : item
-    ));
-    persist(next);
-  }
-
-  function deleteProduct(id) {
-    persist(allProducts.filter((item) => !(item.id === id && item.userId === currentUser.id)));
-    setCompareIds((ids) => ids.filter((itemId) => itemId !== id));
-  }
-
-  function getProduct(id) {
-    return userProducts.find((product) => product.id === id);
-  }
+  useEffect(() => {
+    const availableIds = new Set(userProducts.map((product) => product.id));
+    setCompareIds((ids) => ids.filter((id) => availableIds.has(id)));
+  }, [userProducts]);
 
   function toggleCompare(id) {
     setCompareIds((ids) => {
@@ -111,10 +101,6 @@ export function ProductProvider({ children }) {
     products: userProducts,
     compareIds,
     compareProducts,
-    addProduct,
-    updateProduct,
-    deleteProduct,
-    getProduct,
     toggleCompare,
     clearCompare,
   }), [userProducts, compareIds, compareProducts]);

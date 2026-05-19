@@ -1,5 +1,4 @@
-import { Check, Pencil, Plus, Trash2, X } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Check, Plus, X } from 'lucide-react';
 import ProductImage from './ProductImage.jsx';
 
 export default function ProductCard({
@@ -7,7 +6,6 @@ export default function ProductCard({
   selected,
   compareDisabled,
   onToggleCompare,
-  onDelete,
 }) {
   return (
     <article className={`product-card ${selected ? 'product-card--selected' : ''}`}>
@@ -37,14 +35,6 @@ export default function ProductCard({
         >
           {selected ? <Check size={16} /> : <Plus size={16} />}
           {selected ? 'Выбрано' : 'Сравнить'}
-        </button>
-        <Link className="button button--ghost" to={`/products/edit/${product.id}`}>
-          <Pencil size={16} />
-          Изменить
-        </Link>
-        <button className="button button--danger" type="button" onClick={() => onDelete(product.id)}>
-          <Trash2 size={16} />
-          Удалить
         </button>
         {compareDisabled && !selected && <span className="help-line"><X size={14} />Можно выбрать до 3 товаров</span>}
       </div>

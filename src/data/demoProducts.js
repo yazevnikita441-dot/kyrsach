@@ -1,7 +1,7 @@
 export const demoProductImages = {
   'Nova X12': 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=900&q=80',
   'AeroBook 14': 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=900&q=80',
-  'SoundPro ANC': 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=80',
+  'Orion S9': 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=900&q=80',
   'ViewMaster 27Q': 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=900&q=80',
 };
 
@@ -43,20 +43,21 @@ export const demoProducts = [
     ],
   },
   {
-    id: 'demo-headphones',
-    name: 'SoundPro ANC',
-    category: 'Наушники',
-    brand: 'SoundPro',
-    price: 13990,
-    country: 'Вьетнам',
-    image: demoProductImages['SoundPro ANC'],
-    description: 'Беспроводные наушники с активным шумоподавлением и длительной автономной работой.',
+    id: 'demo-phone-2',
+    name: 'Orion S9',
+    category: 'Смартфоны',
+    brand: 'Orion Mobile',
+    price: 36990,
+    country: 'Индия',
+    image: demoProductImages['Orion S9'],
+    description: 'Смартфон с AMOLED-экраном, емким аккумулятором и хорошей камерой для фото и видео.',
     specs: [
-      { name: 'Мощность', value: '40 мм драйверы' },
-      { name: 'Вес', value: '254 г' },
-      { name: 'Материал', value: 'Пластик, экокожа' },
+      { name: 'Диагональ', value: '6.5 дюйма' },
+      { name: 'Объем памяти', value: '128 ГБ' },
+      { name: 'Мощность', value: '33 Вт зарядка' },
+      { name: 'Вес', value: '186 г' },
+      { name: 'Материал', value: 'Стекло и пластик' },
       { name: 'Гарантия', value: '12 месяцев' },
-      { name: 'Автономность', value: '35 часов' },
     ],
   },
   {

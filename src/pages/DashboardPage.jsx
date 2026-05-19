@@ -1,4 +1,4 @@
-import { BarChart3, Package, PlusCircle } from 'lucide-react';
+import { BarChart3, Package } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth.jsx';
 import { useProducts } from '../hooks/useProducts.jsx';
@@ -13,13 +13,9 @@ export default function DashboardPage() {
       <section className="page-head">
         <div>
           <span className="eyebrow">Личный кабинет</span>
-          <h1>{currentUser.name}, управляйте каталогом товаров</h1>
-          <p>Здесь видна сводка по вашим товарам и быстрые действия для работы с приложением.</p>
+          <h1>{currentUser.name}, выбирайте товары для сравнения</h1>
+          <p>Здесь видна сводка по готовому каталогу и выбранным позициям для сравнения.</p>
         </div>
-        <Link className="button button--primary" to="/products/new">
-          <PlusCircle size={18} />
-          Добавить товар
-        </Link>
       </section>
 
       <section className="stats-grid">

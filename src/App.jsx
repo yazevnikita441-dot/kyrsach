@@ -7,8 +7,6 @@ import ComparePage from './pages/ComparePage.jsx';
 import DashboardPage from './pages/DashboardPage.jsx';
 import HomePage from './pages/HomePage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
-import ProductEditPage from './pages/ProductEditPage.jsx';
-import ProductNewPage from './pages/ProductNewPage.jsx';
 import ProductsPage from './pages/ProductsPage.jsx';
 import RegisterPage from './pages/RegisterPage.jsx';
 
@@ -39,22 +37,8 @@ export default function App() {
                   </ProtectedRoute>
                 )}
               />
-              <Route
-                path="/products/new"
-                element={(
-                  <ProtectedRoute>
-                    <ProductNewPage />
-                  </ProtectedRoute>
-                )}
-              />
-              <Route
-                path="/products/edit/:id"
-                element={(
-                  <ProtectedRoute>
-                    <ProductEditPage />
-                  </ProtectedRoute>
-                )}
-              />
+              <Route path="/products/new" element={<Navigate to="/products" replace />} />
+              <Route path="/products/edit/:id" element={<Navigate to="/products" replace />} />
               <Route
                 path="/compare"
                 element={(

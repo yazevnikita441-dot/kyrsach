@@ -1,11 +1,11 @@
-import { BarChart3, PlusCircle, Search } from 'lucide-react';
+import { BarChart3, Search } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ProductCard from '../components/ProductCard.jsx';
 import { useProducts } from '../hooks/useProducts.jsx';
 
 export default function ProductsPage() {
-  const { products, compareIds, toggleCompare, deleteProduct } = useProducts();
+  const { products, compareIds, toggleCompare } = useProducts();
   const [query, setQuery] = useState('');
 
   const filteredProducts = useMemo(() => {
@@ -21,29 +21,18 @@ export default function ProductsPage() {
     ));
   }, [products, query]);
 
-  function handleDelete(id) {
-    const product = products.find((item) => item.id === id);
-    if (window.confirm(`Удалить товар «${product?.name || 'без названия'}»?`)) {
-      deleteProduct(id);
-    }
-  }
-
   return (
     <div className="page">
       <section className="page-head">
         <div>
           <span className="eyebrow">Каталог</span>
           <h1>Список товаров</h1>
-          <p>Добавляйте позиции, редактируйте данные и выбирайте от 2 до 3 товаров для сравнения.</p>
+          <p>Выбирайте от 2 до 3 товаров из готового каталога, чтобы сравнить характеристики.</p>
         </div>
         <div className="page-head__actions">
           <Link className="button button--ghost" to="/compare">
             <BarChart3 size={18} />
             Сравнить: {compareIds.length}
-          </Link>
-          <Link className="button button--primary" to="/products/new">
-            <PlusCircle size={18} />
-            Добавить товар
           </Link>
         </div>
       </section>
@@ -62,15 +51,13 @@ export default function ProductsPage() {
               selected={compareIds.includes(product.id)}
               compareDisabled={compareIds.length >= 3}
               onToggleCompare={toggleCompare}
-              onDelete={handleDelete}
             />
           ))}
         </section>
       ) : (
         <section className="empty-state">
           <h2>Товары не найдены</h2>
-          <p>Измените поисковый запрос или добавьте новый товар.</p>
-          <Link className="button button--primary" to="/products/new">Добавить товар</Link>
+          <p>Измените поисковый запрос, чтобы найти товар в готовом каталоге.</p>
         </section>
       )}
     </div>
