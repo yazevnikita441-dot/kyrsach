@@ -146,6 +146,10 @@ button:disabled {
   text-overflow: ellipsis;
 }
 
+.header__toggle {
+  display: none;
+}
+
 .button,
 .icon-button {
   display: inline-flex;
@@ -767,24 +771,41 @@ textarea:focus {
     min-height: 68px;
   }
 
+  .header__toggle {
+    display: inline-flex;
+  }
+
   .nav {
-    flex-wrap: wrap;
-    justify-content: flex-end;
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    top: 76px;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
     gap: 8px;
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: white;
+    box-shadow: var(--shadow);
+  }
+
+  .nav--open {
+    display: flex;
   }
 
   .nav a {
-    padding: 8px 0;
+    padding: 10px 8px;
   }
 
   .nav__actions,
   .nav__user {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
+    display: grid;
     margin: 0;
-    padding: 0;
+    padding: 8px 0 0;
     border-left: 0;
+    border-top: 1px solid var(--border);
   }
 
   .user-chip {
